@@ -1,7 +1,7 @@
 package com.api1.Primer.ejemplo.Controllers;
 
+import com.api1.Primer.ejemplo.Interfaces.IJuegoService;
 import com.api1.Primer.ejemplo.Models.Juego;
-import com.api1.Primer.ejemplo.Services.JuegoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +13,15 @@ import java.util.List;
 public class MainController {
 
     @Autowired
-    private JuegoService juegoService;
+    private IJuegoService juegoService;
 
-    // ------------------------
-    //       GET /juegos
-    // ------------------------
+    // GET /juegos
     @GetMapping
     public ResponseEntity<List<Juego>> getAll() {
         return ResponseEntity.ok(juegoService.getAll());
     }
 
-    // ------------------------
-    //     GET /juegos/{id}
-    // ------------------------
+    // GET /juegos/{id}
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
 
@@ -38,9 +34,7 @@ public class MainController {
         return ResponseEntity.ok(juego);
     }
 
-    // ------------------------
-    //        POST /juegos
-    // ------------------------
+    // POST /juegos
     @PostMapping
     public ResponseEntity<?> create(@RequestBody Juego juego) {
         try {

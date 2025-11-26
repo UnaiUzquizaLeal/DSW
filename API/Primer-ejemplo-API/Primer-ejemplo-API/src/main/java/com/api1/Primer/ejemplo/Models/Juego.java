@@ -25,4 +25,6 @@ public class Juego {
 
     public String getGenero() { return genero; }
     public void setGenero(String genero) { this.genero = genero; }
+
+
 }

@@ -2,15 +2,17 @@ package com.api1.Primer.ejemplo.Services;
 
 import com.api1.Primer.ejemplo.Models.Juego;
 import org.springframework.stereotype.Service;
+import com.api1.Primer.ejemplo.Interfaces.IJuegoService;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class JuegoService {
+public class JuegoService implements IJuegoService {
 
     private List<Juego> juegos = new ArrayList<>();
-    private Long contadorId = 4L; // empezamos desde 4 porque ya tienes 3 juegos
+    private Long contadorId = 4L;
 
     public JuegoService() {
         juegos.add(new Juego(1L, "Minecraft", "Sandbox"));
@@ -18,9 +20,6 @@ public class JuegoService {
         juegos.add(new Juego(3L, "ZeldaBOTW", "Aventura"));
     }
 
-    // --------------------------
-    //       VALIDACIONES
-    // --------------------------
     private void validarJuego(Juego juego) {
 
         if (juego.getTitulo() == null || juego.getTitulo().isBlank()) {
@@ -40,16 +39,14 @@ public class JuegoService {
         }
     }
 
-    // --------------------------
-    //           CRUD
-    // --------------------------
-
-    // LISTAR TODOS
+    // listar la lista
+    @Override
     public List<Juego> getAll() {
         return juegos;
     }
 
-    // BUSCAR UNO
+    // buscar un juego
+    @Override
     public Juego getById(Long id) {
         return juegos.stream()
                 .filter(i -> i.getId().equals(id))
@@ -57,7 +54,8 @@ public class JuegoService {
                 .orElse(null);
     }
 
-    // CREAR
+    // crear un juego
+    @Override
     public Juego create(Juego juego) {
         validarJuego(juego);
 
@@ -66,7 +64,8 @@ public class JuegoService {
         return juego;
     }
 
-    // ACTUALIZAR
+    // actualizar un juego
+    @Override
     public Juego update(Long id, Juego datos) {
 
         Juego existente = getById(id);
@@ -83,8 +82,12 @@ public class JuegoService {
         return existente;
     }
 
-    // BORRAR
+    // borrar un juego
+    @Override
     public boolean delete(Long id) {
         return juegos.removeIf(i -> i.getId().equals(id));
     }
+
+
+
 }
